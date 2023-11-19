@@ -15,8 +15,17 @@ def about(request):
 class Processor(APIView):
     def get(self, request):
         if request.method == 'GET':
-            parameter = request.GET.get('parameter')
-            match parameter:
+            prmType = request.GET.get('prmType')
+            match prmType:
                 case 'Pressure':
                     pressure = datetime.now().time().second
-        return Response({'Pressure': str(pressure)})
+                    return Response({'Pressure': str(pressure)})
+            match prmType:
+                case 'Temperature':
+                    temperature = datetime.now().time().minute
+                    return Response({'Temperature': str(temperature)})
+            match prmType:
+                case 'Humidity':
+                    humidity = datetime.now().time().second
+                    return Response({'Humidity': str(humidity)})
+        return Response({'Error': 'undefined parameter type'})
