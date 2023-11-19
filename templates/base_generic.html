@@ -9,25 +9,31 @@
 			header {font: 20px Arial; padding: 5px; color: #1e90ff; background: #f0f8ff;}
 			button {font: 12px Arial; text-align: left;}
 		</style>
-   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-   <script type="text/javascript" src="static/js/meter.js"></script>
-   <script type="text/javascript">
-      google.charts.load('current', {'packages':['gauge']});
-      google.charts.setOnLoadCallback(drawChart);
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript" src="http://127.0.0.1:8000/static/js/server.js"></script>
+	<script type="text/javascript" src="http://127.0.0.1:8000/static/js/floor.js"></script>
+	<script type="text/javascript">
+		google.charts.load('current', {'packages':['gauge']});
+		google.charts.setOnLoadCallback(drawChart);
     </script>
 	</head>
 	<body>
 		<header>АГЕНТСТВО ЭНЕРГЕТИЧЕСКИХ РЕШЕНИЙ</header>
 		<form id="navigationform">
-			<table>
-				<tr>
-					<td><button buttontype="submit" formmethod="get" formaction="{% url 'about'%}">О САЙТЕ</button></td>
-				</tr>
-			</table>
+			<table><tr>
+				<td><button buttontype="submit" formmethod="get" formaction="/about/">О САЙТЕ</button></td>
+				{% if user.is_authenticated %}
+					<td><button buttontype="submit" formmethod="get" formaction="/server/">СЕРВЕР</button></td>
+					<td><button buttontype="submit" formmethod="get" formaction="/floor/">ЭТАЖИ</button></td>
+					{% if user.is_staff %}
+						<td><button buttontype="submit" formmethod="get" formaction="/admin/">ADMIN</button></td>
+					{% endif %}
+					<td><button buttontype="submit" formmethod="get" formaction="{% url 'logout'%}?next={{request.path}}">ВЫЙТИ</button></td>
+				{% else %}
+					<td><button buttontype="submit" formmethod="get" formaction="{% url 'login'%}?next={{request.path}}">ВОЙТИ</button></td>
+				{% endif %}
+			</tr></table>
 		</form>
 		{% block content %} {% endblock %}
-		<div id="chart_div" style="width: 400px; height: 120px;"></div>
-		<p id="result">
-		</p>
 	</body>
 </html>
