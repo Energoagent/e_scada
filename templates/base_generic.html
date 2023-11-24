@@ -1,39 +1,101 @@
 <!DOCTYPE html>
-{% load static %}
 <html>
 	<head>
 		<meta charset=utf-8">
 		<title>ESA SCADA</title>
-		<style>
-			body {font: 12px Arial;	background: #f8f8f8;}
-			header {font: 20px Arial; padding: 5px; color: #1e90ff; background: #f0f8ff;}
-			button {font: 12px Arial; text-align: left;}
-		</style>
-	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-	<script type="text/javascript" src="http://127.0.0.1:8000/static/js/server.js"></script>
-	<script type="text/javascript" src="http://127.0.0.1:8000/static/js/floor.js"></script>
-	<script type="text/javascript">
-		google.charts.load('current', {'packages':['gauge']});
-		google.charts.setOnLoadCallback(drawChart);
-    </script>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="http://127.0.0.1:8000/static/css/themify-icons.css" type="text/css">
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+		
+		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+		<script type="text/javascript" src="http://127.0.0.1:8000/static/js/graf.js"></script>
+		<script type="text/javascript" src="http://127.0.0.1:8000/static/js/floor.js"></script>
+
+		<script type="text/javascript">
+			google.charts.load('current', {'packages':['corechart']});
+			google.charts.setOnLoadCallback(drawCoreChart);
+		</script>
 	</head>
 	<body>
-		<header>АГЕНТСТВО ЭНЕРГЕТИЧЕСКИХ РЕШЕНИЙ</header>
-		<form id="navigationform">
-			<table><tr>
-				<td><button buttontype="submit" formmethod="get" formaction="/about/">О САЙТЕ</button></td>
-				{% if user.is_authenticated %}
-					<td><button buttontype="submit" formmethod="get" formaction="/server/">СЕРВЕР</button></td>
-					<td><button buttontype="submit" formmethod="get" formaction="/floor/">ЭТАЖИ</button></td>
-					{% if user.is_staff %}
-						<td><button buttontype="submit" formmethod="get" formaction="/admin/">ADMIN</button></td>
-					{% endif %}
-					<td><button buttontype="submit" formmethod="get" formaction="{% url 'logout'%}?next={{request.path}}">ВЫЙТИ</button></td>
-				{% else %}
-					<td><button buttontype="submit" formmethod="get" formaction="{% url 'login'%}?next={{request.path}}">ВОЙТИ</button></td>
-				{% endif %}
-			</tr></table>
-		</form>
-		{% block content %} {% endblock %}
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-2">
+				<div class="btn-group">
+					{%if contextmenu%}
+					<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" 
+						aria-haspopup="true" aria-expanded="false">
+						<i class="ti-list"></i>
+					</button>
+					<div class="dropdown-menu dropdown-menu-right">
+						{% for key, value in contextmenu.items %}
+						<button class="dropdown-item" type="button" formmethod="get" formaction="{{value}}"><i class="ti-star"></i>{{key}}</button>
+						{% endfor %}
+					</div>
+					{%endif%}
+				</div>
+			</div>
+			<div class="col-sm-8">
+				<form id="navigation">
+					<button buttontype="submit" class="btn btn-basic" form="navigation" formmethod="get" formaction="/server">СЕРВЕР</button>
+					<button buttontype="submit" class="btn btn-basic" form="navigation" formmethod="get" formaction="/floor" name="page_number" value=2>ПЛАН</button>
+					<button buttontype="submit" class="btn btn-basic" form="navigation"formmethod="get" formaction="/graf" name="page_number" value=1>ГРАФИК</button>
+					<button buttontype="submit" class="btn btn-basic" form="navigation"formmethod="get" formaction="/report" name="page_number" value=1>ОТЧЕТ</button>
+					<div class="p-2">
+						Этаж {{floor_id}} 
+						{%if unit_id%}
+							Помещение {{unit_id}}
+						{%endif%}
+					</div>
+				</form>
+			</div>
+			{%if user%}
+			<div class="col-sm-2">
+				<div class="d-flex flex-row">
+					<div class="p-2"><i class="ti-user"></i></div>
+					<div class="p-2">{{user.get_username}}</div>
+				</div>			
+			</div>
+			{%endif%}
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="col-sm-10">
+			<div class="row">
+			{% block content %} {% endblock %}
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="row">
+			{%if is_paginated %}
+			<div class="col-sm-3">
+				<div class="container-fluid">
+				<form id="pagination">
+					<ul class="pagination">
+						<button buttontype="submit" class="btn btn-lite" form="pagination" formmethod="get" name="page_change" value="to_home"> 
+							<i class="ti-angle-double-left"> </i> </button>
+						<button buttontype="submit" class="btn btn-lite" form="pagination" formmethod="get" name="page_change" value="-1"> 
+							<i class="ti-angle-left"> </i> </button>
+						<input type="number" class="form-control" size="3" value={{page_number}} form="pagination" formmethod="get" name="page_number" > </input>
+						<button buttontype="submit" class="btn btn-lite" form="pagination" formmethod="get"> 
+							<i class="ti-search"> </i> </button>
+						<button buttontype="submit" class="btn btn-lite" form="pagination" formmethod="get" name="page_change" value="+1"> 
+							<i class="ti-angle-right"> </i> </button>
+						<button buttontype="submit" class="btn btn-lite" form="pagination" formmethod="get" name="page_change" value="to_end"> 
+							<i class="ti-angle-double-right"> </i> </button>
+					</ul>
+				</form>
+				</div>	
+			</div>
+			{%endif%}
+		</div>
+	</div>
+<!--	<p>СЕССИЯ: {{request.session.items}}</p>
+-->
 	</body>
 </html>
