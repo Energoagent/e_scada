@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset=utf-8">
+		<title>ESA SCADA</title>
+		<meta name="viewport" content="height=device-height, width=device-width, initial-scale=1">
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="http://127.0.0.1:8000/static/css/themify-icons.css" type="text/css">
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+		
+		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+		<script type="text/javascript">
+		    google.charts.load('current', {'packages':['corechart']});
+			google.charts.setOnLoadCallback(drawCoreChart);
+
+      function drawCoreChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Year', 'Sales', 'Expenses'],
+          ['2004',  1000,      400],
+          ['2005',  1170,      460],
+          ['2006',  660,       1120],
+          ['2007',  1030,      540]
+        ]);
+
+        var options = {
+          title: 'Company Performance',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart_mbT214 = new google.visualization.LineChart(document.getElementById('chart_mbT214'));
+        var chart_mbW214 = new google.visualization.LineChart(document.getElementById('chart_mbW214'));
+        var chart_mbdP214_213 = new google.visualization.LineChart(document.getElementById('chart_mbdP214_213'));
+
+        chart_mbT214.draw(data, options);
+        chart_mbW214.draw(data, options);
+        chart_mbdP214_213.draw(data, options);
+      }
+	  
+function floorChart() {
+	setInterval(
+		function() {
+			var req = new XMLHttpRequest();
+			req.open("POST", "http://192.168.22.252:8686/parameter/?graf=3");
+			req.onreadystatechange = function() {
+				if(this.readyState === 4 && this.status === 200) {
+					parameters = JSON.parse(this.response);
+//					console.log('DEBUG:', parameters);
+					for(let i=0; i < parameters.length; i++) {
+						let elem = document.getElementById(parameters[i].ID);
+						if(elem != null) {
+							elem.innerHTML = parameters[i].Value;
+							elem.style.fill = parameters[i].color;
+						};
+					};
+				};
+			};
+			req.send();
+		}, 
+		5000
+	);
+}
+function ChangePage(page_num) {
+	page_name = "page " + String(page_num);
+	console.log('goto pageN:', page_name);
+	location.assign("http://192.168.22.252:8686/parameter/" + page_name);
+    return false;
+}
+
+var unit_number = 214;
+
+function ChangeUnit(elem) {
+	console.log('goto unitN:', elem.value);
+	unit_number = elem.value;
+	el1 = document.getElementById("unit_label");
+	el1.innerHTML = unit_number;
+    return false;
+}
+		</script>
+	</head>
+	<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-6">
+				<form id="navigation">
+					<button buttontype="submit" class="btn btn-basic" onclick="ChangePage(1);">СТРАНИЦА 1</button>
+					<button buttontype="submit" class="btn btn-basic" onclick="ChangePage(2);">СТРАНИЦА 2</button>
+					<button buttontype="submit" class="btn btn-basic" onclick="ChangePage(3);">СТРАНИЦА 3</button>
+					<button buttontype="submit" class="btn btn-basic" onclick="ChangePage(3);">ГРАФ</button>
+				</form>
+			</div>
+			<div class="col-sm-2">
+				<form id="unit_navigation">
+					<input id="unit_input" type="number" class="form-control" placeholder="Default Input" name="unit_number" onkeypress="ChangeUnit(this);">
+				</form>
+			</div>
+			<div class="col-sm-4">
+				<p id="unit_label" style="font-size: 2em">214</p>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-10">
+				<div id="chart_mbT214" style="width: 100%; height: 20%px"></div>
+				<div id="chart_mbW214" style="width: 100%; height: 20%px"></div>
+				<div id="chart_mbdP214_213" style="width: 100%; height: 20%px"></div>
+			</div>
+		</div>
+	</div>
+	</body>
+</html>

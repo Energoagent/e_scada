@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset=utf-8">
+		<title>ESA SCADA</title>
+		<meta name="viewport" content="height=device-height, width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+		<script type="text/javascript">
+			function floorChart() {
+				setInterval(
+					function() {
+						var req = new XMLHttpRequest();
+						req.open("POST", "http://192.168.22.252:8686/parameter/?page=1");
+						req.onreadystatechange = function() {
+							if(this.readyState === 4 && this.status === 200) {
+								parameters = JSON.parse(this.response);
+								for(let i=0; i < parameters.length; i++) {
+									let elem = document.getElementById(parameters[i].ID);
+									if(elem != null) {
+										elem.textContent = parameters[i].Value;
+										elem.style.color = parameters[i].color;
+									};
+								};
+							};
+						};
+						req.send();
+					}, 
+					5000
+				);
+			}
+			floorChart();
+		</script>
+	</head>
+	<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-8">
+				<form id="navigation">
+					<button buttontype="submit" class="btn btn-basic" formmethod="get" formaction="http://192.168.22.252:8686/page_2">2 Этаж</button>
+					<button buttontype="submit" class="btn btn-basic" formmethod="get" formaction="http://192.168.22.252:8686/page_3">3 Этаж</button>
+				</form>
+			</div>
+			<div class="col-sm-2">
+				<p style="font-size: 2em">Сводная</p>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="row">
+					<div class="col-sm-2">
+						<ul class="list-group">
+							<li class="list-group-item active">306.Операционная</li>
+							<li class="list-group-item">Температура: <span id="mbT306">mbT306</span></li>
+							<li class="list-group-item">Влажность: <span id="mbT306">mbW306</li>
+							<li class="list-group-item">Давление: <span id="mbdP306_305">mbdP306_305</li>
+						</ul>
+					</div>
+					<div class="col-sm-2">
+						<ul class="list-group">
+							<li class="list-group-item active">309.Содержание животных</li>
+							<li class="list-group-item">Температура: <span id="mbT309">mbT309</span></li>
+							<li class="list-group-item">Влажность: <span id="mbT309">mbW309</li>
+							<li class="list-group-item">Давление: <span id="mbdP309_310">mbdP309_310</li>
+						</ul>
+					</div>
+					<div class="col-sm-2">
+						<ul class="list-group">
+							<li class="list-group-item active">311.Содержание животных</li>
+							<li class="list-group-item">Температура: <span id="mbT311">mbT311</span></li>
+							<li class="list-group-item">Влажность: <span id="mbT311">mbW311</li>
+							<li class="list-group-item">Давление: <span id="mbdP309_310">mbdP311_310</li>
+						</ul>
+					</div>
+					<div class="col-sm-2">
+						<ul class="list-group">
+							<li class="list-group-item active">314.Содержание животных</li>
+							<li class="list-group-item">Температура: <span id="mbT314">mbT314</span></li>
+							<li class="list-group-item">Влажность: <span id="mbT314">mbW314</li>
+							<li class="list-group-item">Давление: <span id="mbdP314_312">mbdP314_312</li>
+						</ul>
+					</div>
+					<div class="col-sm-2">
+						<ul class="list-group">
+							<li class="list-group-item active">316.Карантин/адаптация</li>
+							<li class="list-group-item">Температура: <span id="mbT316">mbT316</span></li>
+							<li class="list-group-item">Влажность: <span id="mbT316">mbW316</li>
+							<li class="list-group-item">Давление: <span id="mbdP317_316">mbdP317_316</li>
+						</ul>
+					</div>
+				</div>
+<!-- -->
+				<div class="row">
+					<div class="col-sm-2">
+						<ul class="list-group">
+							<li class="list-group-item active">210.Содержание животных</li>
+							<li class="list-group-item">Температура: <span id="mbT210">mbT210</span></li>
+							<li class="list-group-item">Влажность: <span id="mbW210">mbW210</li>
+							<li class="list-group-item">Давление: <span id="mbdP208_210">mbdP208_210</li>
+						</ul>
+					</div>
+					<div class="col-sm-2">
+						<ul class="list-group">
+							<li class="list-group-item active">211.Содержание животных</li>
+							<li class="list-group-item">Температура: <span id="mbT211">mbT211</span></li>
+							<li class="list-group-item">Влажность: <span id="mbW211">mbW211</li>
+							<li class="list-group-item">Давление: <span id="mbdP208_211">mbdP208_211</li>
+						</ul>
+					</div>
+					<div class="col-sm-2">
+						<ul class="list-group">
+							<li class="list-group-item active">212.Содержание животных</li>
+							<li class="list-group-item">Температура: <span id="mbT212">mbT212</span></li>
+							<li class="list-group-item">Влажность: <span id="mbW212">mbW212</li>
+							<li class="list-group-item">Давление: <span id="mbdP208_212">mbdP208_212</li>
+						</ul>
+					</div>
+					<div class="col-sm-2">
+						<ul class="list-group">
+							<li class="list-group-item active">214.Операционная</li>
+							<li class="list-group-item">Температура: <span id="mbT214">mbT214</span></li>
+							<li class="list-group-item">Влажность: <span id="mbW214">mbW214</li>
+							<li class="list-group-item">Давление: <span id="mbdP214_213">mbdP214_213</li>
+						</ul>
+					</div>
+					<div class="col-sm-2">
+						<ul class="list-group">
+							<li class="list-group-item active">215.Содержание животных</li>
+							<li class="list-group-item">Температура: <span id="mbT215">mbT215</span></li>
+							<li class="list-group-item">Влажность: <span id="mbW215">mbW215</li>
+							<li class="list-group-item">Давление: <span id="mbdP208_215">mbdP208_215</li>
+						</ul>
+					</div>
+				</div>
+<!-- -->
+				<div class="row">
+					<div class="col-sm-2">
+						<ul class="list-group">
+							<li class="list-group-item active">209-206.Чистый склад</li>
+							<li class="list-group-item">Давление: <span id="mbdP206_209">mbdP206_209</li>
+						</ul>
+					</div>
+					<div class="col-sm-2">
+						<ul class="list-group">
+							<li class="list-group-item active">209-208.Чистый склад</li>
+							<li class="list-group-item">Давление: <span id="mbdP208_209">mbdP208_209</li>
+						</ul>
+					</div>
+					<div class="col-sm-2">
+						<ul class="list-group">
+							<li class="list-group-item active">006.Влажный архив</li>
+							<li class="list-group-item">Температура: <span id="mbT215">mbT006</span></li>
+							<li class="list-group-item">Влажность: <span id="mbW215">mbW006</li>
+						</ul>
+					</div>
+					<div class="col-sm-2">
+						<ul class="list-group">
+							<li class="list-group-item active">012.Хранение отходов</li>
+							<li class="list-group-item">Температура: <span id="mbT012">mbT006</span></li>
+							<li class="list-group-item">Влажность: <span id="mbW012">mbW006</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</body>
+</html>

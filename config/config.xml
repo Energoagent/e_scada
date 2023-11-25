@@ -1,0 +1,12 @@
+<container type="floor" id="2" name="Этаж">
+	<unit type="room" id="214" name="Операционная">
+		<parameter type="AI" id="mbdP214_213" name="Давление">0.0</parameter>
+		<parameter type="AI" id="mbT214" name="Температура">0.0</parameter>
+		<parameter type="AI" id="mbV214" name="Влажность">0.0</parameter>
+	</unit>
+	<unit type="room" id="210" name="Прием животных">
+		<parameter type="AI" id="mbdP208_210" name="Давление">0.0</parameter>
+		<parameter type="AI" id="mbT210" name="Температура">0.0</parameter>
+		<parameter type="AI" id="mbV210" name="Влажность">0.0</parameter>
+	</unit>
+</container>
