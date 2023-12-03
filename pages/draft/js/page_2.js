@@ -4,7 +4,6 @@ let els = [];
 function setSVGForeignObjectsNonScale(svg){
 
 	function fixedSizeForeignObject(el) {
-		console.log('DEBUG:', el);
 		let info = {
 			el: el, svg: svg,
 			w: el.getAttribute('width') * 1, h: el.getAttribute('height') * 1,
