@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset=utf-8">
+		<title>ESA SCADA</title>
+		<meta name="viewport" content="height=device-height, width=device-width, initial-scale=1">
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<!--
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+-->		
+		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+		<script type="text/javascript">
+		    google.charts.load('current', {'packages':['corechart']});
+			google.charts.setOnLoadCallback(drawCoreChart);
+
+function drawCoreChart() {
+        var data_mbdT = google.visualization.arrayToDataTable([
+          ['Время', 'T min', 'T изм', 'T max'],
+          ['17:00', 18, 18,	25],
+          ['17:30', 18, 20,	25],
+          ['18:00', 18, 25,	25],
+          ['18:30', 18, 22,	25]
+        ]);
+        var data_mbdP = google.visualization.arrayToDataTable([
+          ['Время', 'P min', 'P изм', 'P max'],
+          ['17:00', 18, 18,	25],
+          ['17:30', 18, 20,	25],
+          ['18:00', 18, 25,	25],
+          ['18:30', 18, 22,	25]
+        ]);
+        var data_mbdV = google.visualization.arrayToDataTable([
+          ['Время', 'V min', 'V изм', 'V max'],
+          ['17:00', 40, 77,	80],
+          ['17:30', 40, 67,	80],
+          ['18:00', 40, 80,	80],
+          ['18:30', 40, 85,	80]
+        ]);
+
+        var options_mbdT = {
+			title: 'ТЕМПЕРАТУРА',
+			curveType: 'function',
+			legend: { position: 'bottom' },
+        };
+        var options_mbdP = {
+			title: 'ДАВЛЕНИЕ',
+			curveType: 'function',
+			legend: { position: 'bottom' },
+        };
+        var options_mbdV = {
+			title: 'ВЛАЖНОСТЬ',
+			curveType: 'function',
+			legend: { position: 'bottom' },
+        };
+
+        var chart_mbdT = new google.visualization.LineChart(document.getElementById('chart_mbT'));
+        var chart_mbdP = new google.visualization.LineChart(document.getElementById('chart_mbdP'));
+        var chart_mbdV = new google.visualization.LineChart(document.getElementById('chart_mbW'));
+
+        chart_mbdT.draw(data_mbdT, options_mbdT);
+        chart_mbdP.draw(data_mbdP, options_mbdP);
+        chart_mbdV.draw(data_mbdV, options_mbdV);
+
+};
+
+function ChangePage(page_num) {
+	page_name = "page " + String(page_num);
+	console.log('goto pageN:', page_name);
+	location.assign("http://192.168.22.252:8686/parameter/" + page_name);
+    return false;
+}
+
+var unit_number = 214;
+
+function ChangeUnit(elem) {
+	console.log('goto unitN:', elem.value);
+	unit_number = elem.value;
+	el1 = document.getElementById("unit_label");
+	el1.innerHTML = unit_number;
+    return false;
+}
+		</script>
+	</head>
+	<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-6">
+				<form id="navigation">
+					<button buttontype="submit" class="btn btn-basic" formmethod="get" formaction="http://192.168.22.252:8686/page_1">Сводная</button>
+					<button buttontype="submit" class="btn btn-basic" formmethod="get" formaction="http://192.168.22.252:8686/page_2">2 Этаж</button>
+					<button buttontype="submit" class="btn btn-basic" formmethod="get" formaction="http://192.168.22.252:8686/page_3">3 Этаж</button>
+					<button buttontype="submit" class="btn btn-basic" formmethod="get" formaction="" disabled>Графики</button>
+				</form>
+			</div>
+			<div class="col-sm-4">
+				<form id="unit_navigation">
+					<select class="custom-select" size="1" name="selected_unit">
+						<option disabled>Помещение</option>
+						<option value="unit210">210.Прием животных</option>
+						<option selected value="unit211">211.Мыши</option>
+						<option value="unit212">212.Мыши</option>
+					</select>
+				</form>
+			</div>
+			<div class="col-sm-2">
+				<button form="unit_navigation" buttontype="submit" class="btn btn-basic" formmethod="get" formaction="">Выбрать</button>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-10">
+				<div id="chart_mbT" style="width: 100%; height: 20%px"></div>
+				<div id="chart_mbW" style="width: 100%; height: 20%px"></div>
+				<div id="chart_mbdP" style="width: 100%; height: 20%px"></div>
+			</div>
+		</div>
+	</div>
+	</body>
+</html>

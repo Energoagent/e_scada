@@ -1,0 +1,56 @@
+DOOR205_207
+DOOR207_208
+DOOR208_213
+DOOR208_216
+DOOR214_213
+DOOR216_217
+DOOR308_316
+DOOR308_318
+DOOR316_317
+DOOR320_322
+
+hv210
+hv210sw - выключатель света
+hv211sw
+hv212sw
+hv215sw
+hv309sw
+hv312sw
+hv315sw
+hv317sw
+
+IVC1 - установки 
+IVC2
+IVC3
+IVC4
+IVC5
+IVC6
+IVC7
+
+mbdP206_209 - перепад давления
+mbdP208_209
+mbdP208_210
+mbdP208_211
+mbdP208_212
+mbdP208_215
+mbdP214_213
+mbdP306_305
+mbdP309_310
+mbdP312_310
+mbdP315_313
+mbdP317_316
+
+mbT006 - температура
+mbT012
+mbT210
+mbT211
+mbT212
+mbT214
+mbT215
+mbT306
+mbT309
+mbT312
+mbT315
+mbT317
+
+mbV - влажность

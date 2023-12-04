@@ -34,13 +34,13 @@
 			function svgScale() {
 				h = window.innerHeight;
 				w = window.innerWidth;
-				let elem=document.getElementById("floor_2"); 
+				let elem=document.getElementById("floor_plan"); 
 					if(elem !=null) { 
 						elem.style.width = w *0.95;
 						elem.style.height = h * 0.95;
 					};
 			}
-			floorChart();
+//			floorChart();
 		</script>
 	</head>
 	<body onresize="svgScale();" onload="svgScale();">
@@ -62,57 +62,13 @@
 		<div class="row">
 			<div class="col-sm-12">
 				<div class="container-fluid" >
-		<svg id="floor_2" width="1600" height="800" viewBox="0 0 800 500" preserveAspectRatio='none'  xmlns="http://www.w3.org/2000/svg" version="1.1">
-		<path id="svg_1" stroke-width="0.5" stroke="black" fill="none" d="m0.25,0.25l0,434.2m0,0l795.48,0m0,0l0,-434.2m0,0l-795.48,0"/>
-		<path id="svg_2" stroke-width="0.5" stroke="black" fill="none" d="m371.94,170.46l-6.95,0m0,0l0,-13.9m0,0l-3.47,0m0,0l0,-10.42m0,0l6.94,0m0,0l0,3.47m0,0l34.74,0m0,0l0,-48.63m0,0l-34.74,0m0,0l0,24.32m0,0l-6.94,0m0,0l0,-24.32m0,0l-3.48,0m0,0l0,-6.95m0,0l45.16,0m0,0l0,-34.73m0,0l6.95,0m0,0l0,66m0,0l31.26,0m0,0l0,6.94m0,0l-31.26,0m0,0l0,76.43m0,0l34.73,0m0,0l0,13.89m0,0l-79.89,0m0,0l0,-13.89m0,0l0,-17.37m0,0l6.95,0m0,0l0,17.37m0,0l31.26,0m0,0l0,-52.11m0,0l-31.26,0m0,0l0,13.9"/>
-		<path id="svg_3" stroke-width="0.5" stroke="black" fill="none" d="m556.04,222.56l-79.89,0m0,0l0,-13.89m0,0l38.21,0m0,0l0,-76.42m0,0l-41.69,-0.01m0,0l0,-6.94m0,0l41.69,0m0,0l0,-107.69m0,0l-104.21,0m0,0l0,10.42m0,0l-6.95,0m0,0l0,-10.42m0,0l-79.89,0m0,0l0,76.42m0,0l6.94,0m0,0l0,6.95m0,0l-6.94,0m0,0l0,107.69m0,0l10.42,0m0,0l0,13.89m0,0l-125.06,0m0,0l0,-13.89m0,0l6.95,0m0,0l0,-17.37m0,0l13.9,0m0,0l0,17.37m0,0l79.89,0m0,0l0,-191.06m0,0l-79.89,0m0,0l0,142.42m0,0l-13.9,0m0,0l0,-142.42m0,0l-52.1,0m0,0l0,66m0,0l-10.42,0m0,0l0,-10.42m0,0l-41.69,0m0,0l0,-55.58m0,0l-93.79,0m0,0l0,191.06m0,0l138.95,0m0,0l0,-97.27m0,0l6.95,0m0,0l0,97.27m0,0l6.94,0m0,0l0,13.89m0,0l-13.89,0m0,0l0,17.37m0,0l-6.95,0m0,0l0,-17.37m0,0l-132,0m0,0l0,83.37m0,0l132,0m0,0l0,-34.74m0,0l6.95,0m0,0l0,79.9m0,0l10.42,0m0,0l0,6.94m0,0l-17.37,0m0,0l0,-45.15m0,0l-132,0m0,0l0,104.21m0,0l187.58,0m0,0l0,-59.06m0,0l-3.47,0m0,0l0,-6.94m0,0l3.47,0m0,0l0,-20.85m0,0l6.95,0m0,0l0,86.85m0,0l93.79,0m0,0l0,-128.53m0,0l-93.79,0m0,0l0,6.95m0,0l-3.48,0m0,0l0,-6.95m0,0l-6.94,0m0,0l0,-6.95m0,0l333.47,0m0,0l0,6.95m0,0l-27.79,0m0,0l0,86.84m0,0l-6.95,0m0,0l0,-86.84m0,0l-187.58,0m0,0l0,128.53m0,0l187.58,0m0,0l0,-10.42m0,0l6.95,0m0,0l0,10.42m0,0l132,0m0,0l0,-55.58m0,0l6.95,0m0,0l0,55.58m0,0l132,0m0,0l0,-128.53m0,0l-132,0m0,0l0,41.68m0,0l-6.95,0m0,0l0,-41.68m0,0l-59.05,0m0,0l0,-6.95m0,0l198,0m0,0l0,-59.05m0,0l-72.95,0m0,0l0,-104.21m0,0l17.37,0m0,0l0,6.95m0,0l-10.42,0m0,0l0,83.37m0,0l66,0m0,0l0,-83.37m0,0l-20.84,0m0,0l0,-6.95m0,0l20.84,0m0,0l0,-100.74m0,0l-128.53,0m0,0l0,10.42m0,0l-6.95,0m0,0l0,-10.42m0,0l-125.05,0m0,0l0,191.06m0,0l125.05,0m0,0l0,-132m0,0l6.95,0m0,0l0,132m0,0l24.32,0m0,0l0,13.89m0,0l-118.11,0"/>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="10" id="svg_5" y="32.5" x="27" stroke-width="0" stroke="#000" fill="#000000">303. Склад</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="10" id="svg_6" y="46.5" x="331" stroke-width="0" stroke="#000" fill="#000000">320. Санпропускник</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="10" id="svg_7" y="66.5" x="419" stroke-width="0" stroke="#000" fill="#000000">316. Изолятор</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="8" id="svg_8" y="86.5" x="416" stroke-width="0" stroke="#000" fill="#000000">Температура</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="8" id="svg_9" y="98.43548" x="417.64516" stroke-width="0" stroke="#000" fill="#000000">Влажность</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="8" id="svg_10" y="110.27419" x="417.58064" stroke-width="0" stroke="#000" fill="#000000">Давление</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="8" id="mbT316" y="87.06327" x="482.62932" stroke-width="0" stroke="#000" fill="#000000">mbT316</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="8" id="mbW316" y="98.17265" x="476.9645" stroke-width="0" stroke="#000" fill="#000000">mbW316</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="8" id="mbdP317_316" y="110.43071" x="470.48145" stroke-width="0" stroke="#000" fill="#000000">mbdP317_316</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="10" id="svg_14" y="144.97599" x="415.74008" stroke-width="0" stroke="#000" fill="#000000">315. Мойка клеток</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="10" id="svg_14" y="144.97599" x="330.74008" stroke-width="0" stroke="#000" fill="#000000">317. Тамбур</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="10" id="svg_15" y="30.88707" x="525.22568" stroke-width="0" stroke="#000" fill="#000000">314. Кролики</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="8" id="svg_16" y="46.37094" x="524.58052" stroke-width="0" stroke="#000" fill="#000000">Температура</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="8" id="mbT314" y="46.07195" x="592.62145" stroke-width="0" stroke="#000" fill="#000000">mbT314</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="8" id="svg_18" y="57.68485" x="526.65764" stroke-width="0" stroke="#000" fill="#000000">Влажность</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="8" id="mbW314" y="56.74069" x="590.02508" stroke-width="0" stroke="#000" fill="#000000">mbW314</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="8" id="svg_20" y="68.66832" x="526.50028" stroke-width="0" stroke="#000" fill="#000000">Давление</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="8" id="mbdP312_314" y="68.8414" x="584.51762" stroke-width="0" stroke="#000" fill="#000000">mbdP312_314</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="10" id="svg_22" y="32.1774" x="660.06438" stroke-width="0" stroke="#000" fill="#000000">312. Мойка</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="10" id="svg_23" y="136.04836" x="718.12889" stroke-width="0" stroke="#000" fill="#000000">313. Мойка</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="10" id="svg_24" y="150.2419" x="715.54825" stroke-width="0" stroke="#000" fill="#000000">стеллажей</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="10" id="svg_25" y="250.88705" x="478.12891" stroke-width="0" stroke="#000" fill="#000000">308. Блок содержания животных</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="10" id="svg_26" y="240.56447" x="28.45154" stroke-width="0" stroke="#000" fill="#000000">304. Комната отдыха</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="10" id="svg_27" y="323.79027" x="27.16121" stroke-width="0" stroke="#000" fill="#000000">306. Операционная</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="8" id="svg_28" y="340.56447" x="25.22573" stroke-width="0" stroke="#000" fill="#000000">Температура</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="8" id="mbT306" y="340.26804" x="96.71657" stroke-width="0" stroke="#000" fill="#000000">mbT306</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="8" id="svg_30" y="352.63072" x="26.62067" stroke-width="0" stroke="#000" fill="#000000">Влажность</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="8" id="mbW306" y="352.73534" x="91.76452" stroke-width="0" stroke="#000" fill="#000000">mbW306</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="8" id="svg_32" y="365.34215" x="25.85346" stroke-width="0" stroke="#000" fill="#000000">Давление</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="8" id="mbdP306_305" y="366.31861" x="83.86566" stroke-width="0" stroke="#000" fill="#000000">mbdP306_305</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="10" id="svg_34" y="314.63595" x="179.4367" stroke-width="0" stroke="#000" fill="#000000">307. Манипуляционная</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="10" id="svg_35" y="297.98382" x="351.03215" stroke-width="0" stroke="#000" fill="#000000">309. Крысы</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="8" id="svg_36" y="311.65812" x="346.67338" stroke-width="0" stroke="#000" fill="#000000">Температура</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="8" id="mbT309" y="312.00428" x="417.46803" stroke-width="0" stroke="#000" fill="#000000">mbT309</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="8" id="svg_38" y="325.72576" x="347.79062" stroke-width="0" stroke="#000" fill="#000000">Влажность</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="8" id="mbW309" y="325.25368" x="414.71431" stroke-width="0" stroke="#000" fill="#000000">mbW309</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="8" id="svg_40" y="338.62898" x="347.80635" stroke-width="0" stroke="#000" fill="#000000">Давление</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="8" id="mbdP309_310" y="339.3056" x="408.89213" stroke-width="0" stroke="#000" fill="#000000">mbdP309_310</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="10" id="svg_42" y="302.49995" x="518.77407" stroke-width="0" stroke="#000" fill="#000000">310. Моечная</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="10" id="svg_43" y="304.43544" x="662.64503" stroke-width="0" stroke="#000" fill="#000000">311. Мыши</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="8" id="svg_44" y="321.85479" x="658.77406" stroke-width="0" stroke="#000" fill="#000000">Температура</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="8" id="mbT311" y="322.21668" x="728.92355" stroke-width="0" stroke="#000" fill="#000000">mbT311</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="8" id="svg_46" y="333.32606" x="661.3547" stroke-width="0" stroke="#000" fill="#000000">Влажность</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="8" id="mbW311" y="333.35751" x="728.12103" stroke-width="0" stroke="#000" fill="#000000">mbW311</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="8" id="svg_48" y="344.93896" x="661.3547" stroke-width="0" stroke="#000" fill="#000000">Давление</text>
-		<text xml:space="preserve" text-anchor="start" font-family="Arial" font-size="8" id="mbdP311_310" y="343.581" x="716.59443" stroke-width="0" stroke="#000" fill="#000000">mbdP311_310</text>
-		</svg>
+					<svg id="floor_plan" xmlns="http://www.w3.org/2000/svg" width="1848" height="1024" viewBox="-1 -1 1850 1026" version="1.1">
+						<g stroke-width="0.5" stroke="black" fill="none">
+							<polyline points=" 1216,672 1216,664 1224,664 1224,672 1240,672 1240,680 1168,680 1168,888 1160,888 1160,680 712,680 712,976 1160,976 1160,960 1168,960 1168,976 1416,976 1416,856 1424,856 1424,976 1808,976 1808,680 1424,680 1424,784 1416,784 1416,680 1352,680 1352,672 1808,672 1808,528 1672,528 1672,288 1704,288 1704,296 1680,296 1680,496 1808,496 1808,296 1792,296 1792,288 1808,288 1808,48 1552,48 1552,72 1544,72 1544,48 1200,48 1200,496 1544,496 1544,192 1552,192 1552,496 1568,496 1568,528 1224,528 1224,536 1216,536 1216,528 1104,528 1104,496 1192,496 1192,312 1096,312 1096,304 1192,304 1192,48 912,48 912,72 904,72 904,48 744,48 744,232 752,232 752,240 744,240 744,496 768,496 768,528 480,528 480,496 496,496 496,456 528,456 528,496 712,496 712,48 528,48 528,376 496,376 496,48 368,48 368,200 352,200 352,176 248,176 248,48 40,48 40,496 352,496 352,272 368,272 368,496 376,496 376,528 368,528 368,576 360,576 360,528 40,528 40,672 360,672 360,648 368,648 368,832 376,832 376,840 360,840 360,680 40,680 40,976 472,976 472,840 464,840 464,832 472,832 472,784 480,784 480,976 704,976 704,680 480,680 480,712 472,712 472,680 456,680 456,672 1216,672 " /> 
+							<polyline points=" 856,400 840,400 840,376 832,376 832,352 840,352 840,368 904,368 904,240 840,240 840,304 832,304 832,240 824,240 824,232 904,232 904,144 912,144 912,304 1024,304 1024,312 912,312 912,496 1024,496 1024,528 840,528 840,488 840,448 856,448 856,496 904,496 904,376 856,376 856,400 " /> 
+							<polyline points=" 0,8 0,1024 1848,1024 1848,8 0,8 " /> 
+						</g>
+					</svg>
 				</div>
 			</div>
 		</div>

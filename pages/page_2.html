@@ -14,7 +14,7 @@
 				margin-block-end: 0;
 				text-align: justify;
 			}
-			body.page_2 {
+			.page_2 {
 				background-color: #dde6eb;
 				font-weight: 500;
 				color: lightslategray;
@@ -38,8 +38,7 @@
 
 		<script>floorChart();</script>
 	</head>
-	<body class="page_2">
-<!--	<body class="page_2" onresize="svgScale();" onload="svgScale();"> -->
+	<body onresize="svgScale();" onload="svgScale();">
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-8">
@@ -50,7 +49,7 @@
 				</form>
 			</div>
 			<div class="col-sm-2">
-				<p id="floor_label" style="font-size: 1.5em">Этаж 2</p>
+				<p id="floor_label" style="font-size: 1.2em">Этаж 2</p>
 			</div>
 		</div>
 	</div>
@@ -59,7 +58,7 @@
 			<div class="col-sm-12">
 				<div class="container-fluid" >
 <!--					<svg id="floor_2" width="1600" height="800" viewBox="0 0 800 500" preserveAspectRatio='none'  xmlns="http://www.w3.org/2000/svg" version="1.1">-->
-					<svg id="floor_2" width="1600" height="800" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" version="1.1">
+					<svg class="page_2" id="floor_2" width="1600" height="800" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" version="1.1">
 					<defs>
 						<g>
 							<symbol id="door_open">
@@ -111,7 +110,7 @@
 						</g>
 						<g>
 							<symbol id="lamp_off">
-								<g stroke="gray" style="fill:ligthgray" stroke-width="0.5">
+								<g stroke="Gray" style="fill:LightGray" stroke-width="0.5">
 									<circle cx="12" cy="12"  r="3" />
 									<ellipse cx="12" cy="6"  rx="1" ry="2"/>
 									<ellipse cx="12" cy="6"  rx="1" ry="2" transform="rotate(60 12 12)"/>
@@ -119,6 +118,13 @@
 									<ellipse cx="12" cy="6"  rx="1" ry="2" transform="rotate(180 12 12)"/>
 									<ellipse cx="12" cy="6"  rx="1" ry="2" transform="rotate(240 12 12)"/>
 									<ellipse cx="12" cy="6"  rx="1" ry="2" transform="rotate(300 12 12)"/>
+								</g>
+							</symbol>
+						</g>
+						<g>
+							<symbol id="camera_on">
+								<g stroke="yellow" fill="#3fbfa8" stroke-width="0.5">
+									<polyline points="10,7 10,24 0,24 0,7 3,7 0,0 10,0 7,7 10,7"/>
 								</g>
 							</symbol>
 						</g>
@@ -160,6 +166,7 @@
 							<p style="font-size: 120%">207.Шлюз</p>
 						</div>
 					</foreignObject>
+					<g id="CAM207"><use xlink:href="#camera_on" x="305" y="260" transform="scale(1) rotate(60 305 260)"/></d>
 					<g id="DOOR205_207"><use xlink:href="#door_closed" x="240" y="238"/><g>
 					<g id="DOOR205_207"><use xlink:href="#door_open" x="350" y="238"/><g>
 					<foreignObject id="unit216" x="452" y="250" width="260" height="260">
