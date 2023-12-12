@@ -5,41 +5,11 @@
 		<title>ESA SCADA</title>
 		<meta name="viewport" content="height=device-height, width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-		<style>
-			p.scada_indent {
-				margin-left: 20px; /* Отступ слева */
-				margin-block-start: 0; 
-				margin-block-end: 0;
-				text-align: justify;
-			}
-		</style>
-		<script type="text/javascript">
-			function floorChart() {
-				setInterval(
-					function() {
-						var req = new XMLHttpRequest();
-						req.open("POST", "http://192.168.22.252:8686/parameter/?page=1");
-						req.onreadystatechange = function() {
-							if(this.readyState === 4 && this.status === 200) {
-								parameters = JSON.parse(this.response);
-								for(let i=0; i < parameters.length; i++) {
-									let elem = document.getElementById(parameters[i].ID);
-									if(elem != null) {
-										elem.textContent = parameters[i].Value;
-										elem.style.color = parameters[i].color;
-									};
-								};
-							};
-						};
-						req.send();
-					}, 
-					5000
-				);
-			}
-			floorChart();
-		</script>
+		<link rel="stylesheet" href="./static/css/styles.css">
+		<script src="./static/js/scripts.js"></script>
+		<script>parametersChart(1); displayParameters();</script>
 	</head>
-	<body>
+	<body class="text_summary">
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-8">
@@ -50,118 +20,118 @@
 				</form>
 			</div>
 			<div class="col-sm-2">
-				<p style="font-size: 1.5em">Сводная</p>
+				<p style="font-size: 1.2em">Сводная</p>
 			</div>
 		</div>
 	</div>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-12">
-				<div class="row">
-					<div class="col-sm-2" style="margin-block-start: 1em;">
-						<p class="text-start" style="font-size: 120%">306.Операционная</p>
+				<div class="row" style="border: 1px solid lightslategray; border-radius: 1em; border-spacing: 2px; margin: 2px">
+					<div class="text_block">
+						<p style="font-size: 120%">306.Операционная</p>
 						<table>
-							<tr><td>Температура:</td><td id="mbT306">mbT306</td></tr>
-							<tr><td>Влажность:</td><td id="mbT306">mbW306</td></tr>
-							<tr><td>Давление:</td><td id="mbdP306_305">mbdP306_305</td></tr>
+							<tr><td>Температура:</td><td id="mbT306">-</td></tr>
+							<tr><td>Влажность:</td><td id="mbW306">-</td></tr>
+							<tr><td>Давление:</td><td id="mbdP306_305">-</td></tr>
 						</table>
 					</div>
-					<div class="col-sm-2" style="margin-block-start: 1em;">
-						<p class="text-start" style="font-size: 120%">309.Содержание животных</p>
+					<div class="text_block">
+						<p style="font-size: 120%">309.Содержание животных</p>
 						<table>
-							<tr><td>Температура:</td><td id="mbT309">mbT309</td></tr>
-							<tr><td>Влажность:</td><td id="mbT309">mbW309</td></tr>
-							<tr><td>Давление:</td><td id="mbdP306_305">mbdP309_310</td></tr>
+							<tr><td>Температура:</td><td id="mbT309">-</td></tr>
+							<tr><td>Влажность:</td><td id="mbW309">-</td></tr>
+							<tr><td>Давление:</td><td id="mbdP309_310">-</td></tr>
 						</table>
 					</div>
-					<div class="col-sm-2" style="margin-block-start: 1em;">
-						<p class="text-start" style="font-size: 120%">311.Содержание животных</p>
+					<div class="text_block">
+						<p style="font-size: 120%">311.Содержание животных</p>
 						<table>
-							<tr><td>Температура:</td><td id="mbT311">mbT311</td></tr>
-							<tr><td>Влажность:</td><td id="mbT311">mbW311</td></tr>
-							<tr><td>Давление:</td><td id="mbdP311_310">mbdP311_310</td></tr>
+							<tr><td>Температура:</td><td id="mbT312">-</td></tr>
+							<tr><td>Влажность:</td><td id="mbW312">-</td></tr>
+							<tr><td>Давление:</td><td id="mbdP312_310">-</td></tr>
 						</table>
 					</div>
-					<div class="col-sm-2" style="margin-block-start: 1em;">
-						<p class="text-start" style="font-size: 120%">314.Содержание животных</p>
+					<div class="text_block">
+						<p style="font-size: 120%">314.Содержание животных</p>
 						<table>
-							<tr><td>Температура:</td><td id="mbT314">mbT314</td></tr>
-							<tr><td>Влажность:</td><td id="mbT314">mbW314</td></tr>
-							<tr><td>Давление:</td><td id="mbdP314_312">mbdP314_312</td></tr>
+							<tr><td>Температура:</td><td id="mbT315">-</td></tr>
+							<tr><td>Влажность:</td><td id="mbW315">-</td></tr>
+							<tr><td>Давление:</td><td id="mbdP315_313">-</td></tr>
 						</table>
 					</div>
-					<div class="col-sm-2" style="margin-block-start: 1em;">
-						<p class="text-start" style="font-size: 120%">316.Карантин/адаптация</p>
+					<div class="text_block">
+						<p style="font-size: 120%">316.Карантин/адаптация</p>
 						<table>
-							<tr><td>Температура:</td><td id="mbT316">mbT316</td></tr>
-							<tr><td>Влажность:</td><td id="mbT316">mbW316</td></tr>
-							<tr><td>Давление:</td><td id="mbdP317_316">mbdP317_316</td></tr>
-						</table>
-					</div>
-				</div>
-<!-- -->
-				<div class="row">
-					<div class="col-sm-2" style="margin-block-start: 1em;">
-						<p class="text-start" style="font-size: 120%">210.Содержание животных</p>
-						<table>
-							<tr><td>Температура:</td><td id="mbT310">mbT310</td></tr>
-							<tr><td>Влажность:</td><td id="mbT310">mbW310</td></tr>
-							<tr><td>Давление:</td><td id="mbdP208_210">mbdP208_210</td></tr>
-						</table>
-					</div>
-					<div class="col-sm-2" style="margin-block-start: 1em;">
-						<p class="text-start" style="font-size: 120%">211.Содержание животных</p>
-						<table>
-							<tr><td>Температура:</td><td id="mbT211">mbT211</td></tr>
-							<tr><td>Влажность:</td><td id="mbW211">mbW311</td></tr>
-							<tr><td>Давление:</td><td id="mbdP208_211">mbdP208_211</td></tr>
-						</table>
-					</div>
-					<div class="col-sm-2" style="margin-block-start: 1em;">
-						<p class="text-start" style="font-size: 120%">212.Содержание животных</p>
-						<table>
-							<tr><td>Температура:</td><td id="mbT212">mbT212</td></tr>
-							<tr><td>Влажность:</td><td id="mbW212">mbW212</td></tr>
-							<tr><td>Давление:</td><td id="mbdP208_212">mbdP208_212</td></tr>
-						</table>
-					</div>
-					<div class="col-sm-2" style="margin-block-start: 1em;">
-						<p class="text-start" style="font-size: 120%">214.Операционная</p>
-						<table>
-							<tr><td>Температура:</td><td id="mbT214">mbT214</td></tr>
-							<tr><td>Влажность:</td><td id="mbW214">mbW214</td></tr>
-							<tr><td>Давление:</td><td id="mbdP214_213">mbdP214_213</td></tr>
-						</table>
-					</div>
-					<div class="col-sm-2" style="margin-block-start: 1em;">
-						<p class="text-start" style="font-size: 120%">215.Содержание животных</p>
-						<table>
-							<tr><td>Температура:</td><td id="mbT215">mbT215</td></tr>
-							<tr><td>Влажность:</td><td id="mbW215">mbW215</td></tr>
-							<tr><td>Давление:</td><td id="mbdP208_215">mbdP208_215</td></tr>
+							<tr><td>Температура:</td><td id="mbT317">-</td></tr>
+							<tr><td>Влажность:</td><td id="mbW317">-</td></tr>
+							<tr><td>Давление:</td><td id="mbdP317_316">-</td></tr>
 						</table>
 					</div>
 				</div>
 <!-- -->
-				<div class="row">
-					<div class="col-sm-2" style="margin-block-start: 1em;">
-						<p class="text-start" style="font-size: 120%">209-206.Чистый склад</p>
+				<div class="row" style="border: 1px solid lightslategray; border-radius: 1em; border-spacing: 2px; margin: 2px">
+					<div class="text_block">
+						<p style="font-size: 120%">209-206.Чистый склад</p>
 						<table>
-							<tr><td>Давление:</td><td id="mbdP206_209">mbdP206_209</td></tr>
+							<tr><td>Давление:</td><td id="mbdP206_209">-</td></tr>
 						</table>
 					</div>
-					<div class="col-sm-2" style="margin-block-start: 1em;">
-						<p class="text-start" style="font-size: 120%">006.Влажный архив</p>
+					<div class="text_block">
+						<p style="font-size: 120%">210.Содержание животных</p>
 						<table>
-							<tr><td>Температура:</td><td id="mbT006">mbT006</td></tr>
-							<tr><td>Влажность:</td><td id="mbW006">mbW006</td></tr>
+							<tr><td>Температура:</td><td id="mbT210">-</td></tr>
+							<tr><td>Влажность:</td><td id="mbW210">-</td></tr>
+							<tr><td>Давление:</td><td id="mbdP208_210">-</td></tr>
 						</table>
 					</div>
-					<div class="col-sm-2" style="margin-block-start: 1em;">
-							<p class="text-start" style="font-size: 120%">012.Хранение отходов</p>
+					<div class="text_block">
+						<p style="font-size: 120%">211.Содержание животных</p>
 						<table>
-							<tr><td>Температура:</td><td id="mbT012">mbT012</td></tr>
-							<tr><td>Влажность:</td><td id="mbW012">mbW012</td></tr>
+							<tr><td>Температура:</td><td id="mbT211">-</td></tr>
+							<tr><td>Влажность:</td><td id="mbW211">-</td></tr>
+							<tr><td>Давление:</td><td id="mbdP208_211">-</td></tr>
+						</table>
+					</div>
+					<div class="text_block">
+						<p style="font-size: 120%">212.Содержание животных</p>
+						<table>
+							<tr><td>Температура:</td><td id="mbT212">-</td></tr>
+							<tr><td>Влажность:</td><td id="mbW212">-</td></tr>
+							<tr><td>Давление:</td><td id="mbdP208_212">-</td></tr>
+						</table>
+					</div>
+					<div class="text_block">
+						<p style="font-size: 120%">214.Операционная</p>
+						<table>
+							<tr><td>Температура:</td><td id="mbT214">-</td></tr>
+							<tr><td>Влажность:</td><td id="mbW214">-</td></tr>
+							<tr><td>Давление:</td><td id="mbdP214_213">-</td></tr>
+						</table>
+					</div>
+					<div class="text_block">
+						<p style="font-size: 120%">215.Содержание животных</p>
+						<table>
+							<tr><td>Температура:</td><td id="mbT215">-</td></tr>
+							<tr><td>Влажность:</td><td id="mbW215">-</td></tr>
+							<tr><td>Давление:</td><td id="mbdP208_215">-</td></tr>
+						</table>
+					</div>
+				</div>
+<!-- -->
+				<div class="row" style="border: 1px solid lightslategray; border-radius: 1em; border-spacing: 2px; margin: 2px">
+					<div class="text_block">
+						<p style="font-size: 120%">006.Влажный архив</p>
+						<table>
+							<tr><td>Температура:</td><td id="mbT006">-</td></tr>
+							<tr><td>Влажность:</td><td id="mbW006">-</td></tr>
+						</table>
+					</div>
+					<div class="text_block">
+						<p style="font-size: 120%">012.Хранение отходов</p>
+						<table>
+							<tr><td>Температура:</td><td id="mbT012">-</td></tr>
+							<tr><td>Влажность:</td><td id="mbW012">-</td></tr>
 						</table>
 					</div>
 				</div>

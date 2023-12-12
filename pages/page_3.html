@@ -4,43 +4,12 @@
 		<meta charset=utf-8">
 		<title>ESA SCADA</title>
 		<meta name="viewport" content="height=device-height, width=device-width, initial-scale=1">
-
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-
-		<script type="text/javascript">
-			function floorChart() {
-				setInterval(
-					function() {
-						var req = new XMLHttpRequest();
-						req.open("POST", "http://192.168.22.252:8686/parameter/?page=3");
-						req.onreadystatechange = function() {
-							if(this.readyState === 4 && this.status === 200) {
-								parameters = JSON.parse(this.response);
-								console.log('PARAMS:', parameters);
-								for(let i=0; i < parameters.length; i++) {
-									let elem = document.getElementById(parameters[i].ID);
-									if(elem != null) {
-										elem.innerHTML = parameters[i].Value;
-										elem.style.fill = parameters[i].color;
-									};
-								};
-							};
-						};
-						req.send();
-					}, 
-					5000
-				);
-			}
-			function svgScale() {
-				h = window.innerHeight;
-				w = window.innerWidth;
-				let elem=document.getElementById("floor_plan"); 
-					if(elem !=null) { 
-						elem.style.width = w *0.95;
-						elem.style.height = h * 0.95;
-					};
-			}
-//			floorChart();
+		<link rel="stylesheet" href="./static/css/styles.css">
+		<script src="./static/js/scripts.js"></script>
+		<script>
+			displayParameters();
+			parametersChart(3); 
 		</script>
 	</head>
 	<body onresize="svgScale();" onload="svgScale();">
@@ -54,24 +23,195 @@
 				</form>
 			</div>
 			<div class="col-sm-2">
-				<p style="font-size: 1.5em">Этаж 3</p>
+				<p style="font-size: 1.2em">Этаж 3</p>
 			</div>
 		</div>
 	</div>
 	<div class="container-fluid">
-		<div class="row">
-			<div class="col-sm-12">
-				<div class="container-fluid" >
-					<svg id="floor_plan" xmlns="http://www.w3.org/2000/svg" width="1848" height="1024" viewBox="-1 -1 1850 1026" version="1.1">
-						<g stroke-width="0.5" stroke="black" fill="none">
-							<polyline points=" 1216,672 1216,664 1224,664 1224,672 1240,672 1240,680 1168,680 1168,888 1160,888 1160,680 712,680 712,976 1160,976 1160,960 1168,960 1168,976 1416,976 1416,856 1424,856 1424,976 1808,976 1808,680 1424,680 1424,784 1416,784 1416,680 1352,680 1352,672 1808,672 1808,528 1672,528 1672,288 1704,288 1704,296 1680,296 1680,496 1808,496 1808,296 1792,296 1792,288 1808,288 1808,48 1552,48 1552,72 1544,72 1544,48 1200,48 1200,496 1544,496 1544,192 1552,192 1552,496 1568,496 1568,528 1224,528 1224,536 1216,536 1216,528 1104,528 1104,496 1192,496 1192,312 1096,312 1096,304 1192,304 1192,48 912,48 912,72 904,72 904,48 744,48 744,232 752,232 752,240 744,240 744,496 768,496 768,528 480,528 480,496 496,496 496,456 528,456 528,496 712,496 712,48 528,48 528,376 496,376 496,48 368,48 368,200 352,200 352,176 248,176 248,48 40,48 40,496 352,496 352,272 368,272 368,496 376,496 376,528 368,528 368,576 360,576 360,528 40,528 40,672 360,672 360,648 368,648 368,832 376,832 376,840 360,840 360,680 40,680 40,976 472,976 472,840 464,840 464,832 472,832 472,784 480,784 480,976 704,976 704,680 480,680 480,712 472,712 472,680 456,680 456,672 1216,672 " /> 
-							<polyline points=" 856,400 840,400 840,376 832,376 832,352 840,352 840,368 904,368 904,240 840,240 840,304 832,304 832,240 824,240 824,232 904,232 904,144 912,144 912,304 1024,304 1024,312 912,312 912,496 1024,496 1024,528 840,528 840,488 840,448 856,448 856,496 904,496 904,376 856,376 856,400 " /> 
-							<polyline points=" 0,8 0,1024 1848,1024 1848,8 0,8 " /> 
-						</g>
-					</svg>
+		<svg id="floor_plan" class="floor_plan" xmlns="http://www.w3.org/2000/svg" width="1848" height="1024" viewBox="-1 -1 1850 1026" version="1.1">
+			<defs>
+				<symbol id="door_open">
+					<g fill="none" stroke="red" stroke-width="1.5">
+						<line x1="28" y1="4" x2="12" y2="8"/>
+						<line x1="12" y1="8" x2="12" y2="56"/>
+						<line x1="12" y1="56" x2="28" y2="68"/>
+						<line x1="28" y1="68" x2="28" y2="4"/>
+						<line x1="4" y1="68" x2="28" y2="68"/>
+						<line x1="28" y1="68" x2="28" y2="4"/>
+						<line x1="28" y1="4" x2="4" y2="4"/>
+						<line x1="4" y1="4" x2="4" y2="68"/>
+						<line x1="0" y1="0" x2="32" y2="0"/>
+						<line x1="32" y1="0" x2="32" y2="72"/>
+						<line x1="32" y1="72" x2="0" y2="72"/>
+						<line x1="0" y1="72" x2="0" y2="0"/>
+					</g>
+				</symbol>
+				<symbol id="door_closed">
+					<g fill="none" stroke="green" stroke-width="1.5">
+						<line x1="8" y1="20" x2="12" y2="20" />
+						<line x1="12" y1="20" x2="12" y2="40" />
+						<line x1="12" y1="40" x2="8" y2="40" />
+						<line x1="8" y1="40" x2="8" y2="20" />
+						<line x1="4" y1="68" x2="28" y2="68" />
+						<line x1="28" y1="68" x2="28" y2="4" />
+						<line x1="28" y1="4" x2="4" y2="4" />
+						<line x1="4" y1="4" x2="4" y2="68" />
+						<line x1="0" y1="0" x2="32" y2="0" />
+						<line x1="32" y1="0" x2="32" y2="72" />
+						<line x1="32" y1="72" x2="0" y2="72" />
+						<line x1="0" y1="72" x2="0" y2="0" />
+					</g>
+				</symbol>
+				<symbol id="lamp_on">
+					<g stroke="red" style="fill:yellow" stroke-width="0.5"  transform="scale(3)">
+						<circle cx="12" cy="12"  r="3" />
+						<ellipse cx="12" cy="6"  rx="1" ry="2"/>
+						<ellipse cx="12" cy="6"  rx="1" ry="2" transform="rotate(60 12 12)"/>
+						<ellipse cx="12" cy="6"  rx="1" ry="2" transform="rotate(120 12 12)"/>
+						<ellipse cx="12" cy="6"  rx="1" ry="2" transform="rotate(180 12 12)"/>
+						<ellipse cx="12" cy="6"  rx="1" ry="2" transform="rotate(240 12 12)"/>
+						<ellipse cx="12" cy="6"  rx="1" ry="2" transform="rotate(300 12 12)"/>
+					</g>
+				</symbol>
+				<symbol id="lamp_off">
+					<g stroke="Gray" style="fill:LightGray" stroke-width="0.5"   transform="scale(3)">
+						<circle cx="12" cy="12"  r="3" />
+						<ellipse cx="12" cy="6"  rx="1" ry="2"/>
+						<ellipse cx="12" cy="6"  rx="1" ry="2" transform="rotate(60 12 12)"/>
+						<ellipse cx="12" cy="6"  rx="1" ry="2" transform="rotate(120 12 12)"/>
+						<ellipse cx="12" cy="6"  rx="1" ry="2" transform="rotate(180 12 12)"/>
+						<ellipse cx="12" cy="6"  rx="1" ry="2" transform="rotate(240 12 12)"/>
+						<ellipse cx="12" cy="6"  rx="1" ry="2" transform="rotate(300 12 12)"/>
+					</g>
+				</symbol>
+				<symbol id="camera_on">
+					<g stroke="yellow" fill="blue" stroke-width="1.5">
+						<polyline points=" 24,16 24,56 0,56 0,16 8,16 0,0 24,0 16,16 24,16 " /> 				
+					</g>
+				</symbol>
+			</defs>
+<!--			<script>drawPixelGrid(50, 50);</script>-->
+			<g stroke-width="0.5" stroke="black" fill="none">
+				<polyline points=" 1216,672 1216,664 1224,664 1224,672 1240,672 1240,680 1168,680 1168,888 1160,888 1160,680 712,680 712,976 1160,976 1160,960 1168,960 1168,976 1416,976 1416,856 1424,856 1424,976 1808,976 1808,680 1424,680 1424,784 1416,784 1416,680 1352,680 1352,672 1808,672 1808,528 1672,528 1672,288 1704,288 1704,296 1680,296 1680,496 1808,496 1808,296 1792,296 1792,288 1808,288 1808,48 1552,48 1552,72 1544,72 1544,48 1200,48 1200,496 1544,496 1544,192 1552,192 1552,496 1568,496 1568,528 1224,528 1224,536 1216,536 1216,528 1104,528 1104,496 1192,496 1192,312 1096,312 1096,304 1192,304 1192,48 912,48 912,72 904,72 904,48 744,48 744,232 752,232 752,240 744,240 744,496 768,496 768,528 480,528 480,496 496,496 496,456 528,456 528,496 712,496 712,48 528,48 528,376 496,376 496,48 368,48 368,200 352,200 352,176 248,176 248,48 40,48 40,496 352,496 352,272 368,272 368,496 376,496 376,528 368,528 368,576 360,576 360,528 40,528 40,672 360,672 360,648 368,648 368,832 376,832 376,840 360,840 360,680 40,680 40,976 472,976 472,840 464,840 464,832 472,832 472,784 480,784 480,976 704,976 704,680 480,680 480,712 472,712 472,680 456,680 456,672 1216,672 " /> 
+				<polyline points=" 856,400 840,400 840,376 832,376 832,352 840,352 840,368 904,368 904,240 840,240 840,304 832,304 832,240 824,240 824,232 904,232 904,144 912,144 912,304 1024,304 1024,312 912,312 912,496 1024,496 1024,528 840,528 840,488 840,448 856,448 856,496 904,496 904,376 856,376 856,400 " /> 
+				<polyline points=" 0,8 0,1024 1848,1024 1848,8 0,8 " /> 
+			</g>
+			<foreignObject id="unit303" x="70" y="100" width="260" height="260">
+				<div class="svg_embedded" xmlns="http://www.w3.org/1999/xhtml">
+					<p style="font-size: 120%">303.Склад</</p>
 				</div>
-			</div>
-		</div>
+			</foreignObject>			
+			<foreignObject id="unit320" x="770" y="100" width="260" height="260">
+				<div class="svg_embedded" xmlns="http://www.w3.org/1999/xhtml">
+					<p style="font-size: 120%">320.Сан-<br />пропускник</</p>
+				</div>
+			</foreignObject>			
+			<foreignObject id="unit316" x="950" y="100" width="260" height="260">
+				<div class="svg_embedded" xmlns="http://www.w3.org/1999/xhtml">
+					<p class="unit_label" style="font-size: 120%">316.Изолятор</p>
+					<table>
+						<tr><td>Температура:</td><td id="mbT317">-</td></tr>
+						<tr><td>Влажность:</td><td id="mbW317">-</td></tr>
+						<tr><td>Давление:</td><td id="mbdP317_316">-</td></tr>
+					</table>
+				</div>
+			</foreignObject>			
+			<use id="hv317sw" data-type="lamp" href="#lamp_off" x="910" y="80"/>
+			<use id="DOOR308_316" data-type="door" xlink:href="#door_closed" x="1050" y="240"/>
+			<foreignObject id="unit314" x="1250" y="100" width="260" height="260">
+				<div class="svg_embedded" xmlns="http://www.w3.org/1999/xhtml">
+					<p class="unit_label" style="font-size: 120%">314.Кролики</p>
+					<table>
+						<tr><td>Температура:</td><td id="mbT315">-</td></tr>
+						<tr><td>Влажность:</td><td id="mbW315">-</td></tr>
+						<tr><td>Давление:</td><td id="mbdP315_313">-</td></tr>
+					</table>
+				</div>
+			</foreignObject>			
+			<use id="hv315sw" data-type="lamp" href="#lamp_off" x="1210" y="80"/>
+			<foreignObject id="unit312" x="1600" y="100" width="260" height="260">
+				<div class="svg_embedded" xmlns="http://www.w3.org/1999/xhtml">
+					<p style="font-size: 120%">312.Мойка</</p>
+				</div>
+			</foreignObject>			
+			<foreignObject id="unit313" x="1690" y="350" width="260" height="260">
+				<div class="svg_embedded" xmlns="http://www.w3.org/1999/xhtml">
+					<p style="font-size: 120%">313.Мойка<br />стеллажей</</p>
+				</div>
+			</foreignObject>			
+			<foreignObject id="unit317" x="770" y="320" width="260" height="260">
+				<div class="svg_embedded" xmlns="http://www.w3.org/1999/xhtml">
+					<p style="font-size: 120%">317.Тамбур</</p>
+				</div>
+			</foreignObject>			
+			<use id="DOOR316_317" data-type="door" xlink:href="#door_closed" x="780" y="170"/>
+			<use id="DOOR308_318" data-type="door" xlink:href="#door_closed" x="780" y="460"/>
+			<foreignObject id="unit315" x="950" y="320" width="260" height="260">
+				<div class="svg_embedded" xmlns="http://www.w3.org/1999/xhtml">
+					<p style="font-size: 120%">315.Мойка клеток</p>
+				</div>
+			</foreignObject>			
+			<g id="DOOR308_316"><use xlink:href="#door_closed" x="1050" y="460"/><g>
+			<foreignObject id="unit304" x="70" y="570" width="260" height="260">
+				<div class="svg_embedded" xmlns="http://www.w3.org/1999/xhtml">
+					<p style="font-size: 120%">304.Комната отдыха</</p>
+				</div>
+			</foreignObject>			
+			<foreignObject id="unit308" x="1250" y="570" width="360" height="260">
+				<div class="svg_embedded" xmlns="http://www.w3.org/1999/xhtml">
+					<p style="font-size: 120%">308.Блок содержания животных</</p>
+				</div>
+			</foreignObject>			
+			<g id=""><use xlink:href="#camera_on" x="400" y="550" transform="rotate(90 400 600)"/><g>
+			<g id=""><use xlink:href="#camera_on" x="1700" y="550" transform="rotate(270 1700 600)"/><g>
+			<foreignObject id="unit306" x="70" y="730" width="260" height="260">
+				<div class="svg_embedded" xmlns="http://www.w3.org/1999/xhtml">
+					<p style="font-size: 120%">306.Операционная</p>
+					<table>
+						<tr><td>Температура:</td><td id="mbT306">-</td></tr>
+						<tr><td>Влажность:</td><td id="mbW306">-</td></tr>
+						<tr><td>Давление:</td><td id="mbdP306_305">-</td></tr>
+					</table>
+				</div>
+			</foreignObject>			
+			<foreignObject id="unit307" x="500" y="730" width="260" height="260">
+				<div class="svg_embedded" xmlns="http://www.w3.org/1999/xhtml">
+					<p style="font-size: 120%">307.Манипуля-<br/>ционная</p>
+				</div>
+			</foreignObject>			
+			<foreignObject id="unit309" x="750" y="730" width="260" height="260">
+				<div class="svg_embedded" xmlns="http://www.w3.org/1999/xhtml">
+					<p class="unit_label" style="font-size: 120%">309.Крысы</p>
+					<table>
+						<tr><td>Температура:</td><td id="mbT309">-</td></tr>
+						<tr><td>Влажность:</td><td id="mbW309">-</td></tr>
+						<tr><td>Давление:</td><td id="mbdP309_310">-</td></tr>
+					</table>
+				</div>
+			</foreignObject>			
+			<use id="hv309sw" data-type="lamp" href="#lamp_off" x="710" y="710"/>
+			<foreignObject id="unit310" x="1250" y="730" width="260" height="260">
+				<div class="svg_embedded" xmlns="http://www.w3.org/1999/xhtml">
+					<p style="font-size: 120%">310.Моечная</p>
+				</div>
+			</foreignObject>			
+			<foreignObject id="unit311" x="1480" y="730" width="260" height="260">
+				<div class="svg_embedded" xmlns="http://www.w3.org/1999/xhtml">
+					<p class="unit_label" style="font-size: 120%">311.Мыши</p>
+					<table>
+						<tr><td>Температура:</td><td id="mbT312">-</td></tr>
+						<tr><td>Влажность:</td><td id="mbW312">-</td></tr>
+						<tr><td>Давление:</td><td id="mbdP312_310">-</td></tr>
+					</table>
+				</div>
+			</foreignObject>			
+			<use id="hv312sw" data-type="lamp" href="#lamp_off" x="1440" y="710"/>
+		</svg>
+		<script>
+			svg = document.querySelector('svg');
+			setSVGForeignObjectsNonScale(svg);
+			window.dispatchEvent(new Event('resize'))
+		</script>
 	</div>
 	</body>
 </html>
