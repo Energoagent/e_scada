@@ -12,14 +12,16 @@
 			parametersChart(3); 
 		</script>
 	</head>
-	<body onresize="svgScale();" onload="svgScale();">
+	<body  class="floor_plan" onresize="svgScale();" onload="svgScale();">
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-8">
 				<form id="navigation">
-					<button buttontype="submit" class="btn btn-basic" formmethod="get" formaction="http://192.168.22.252:8686/page_1">Сводная</button>
-					<button buttontype="submit" class="btn btn-basic" formmethod="get" formaction="http://192.168.22.252:8686/page_2">2 Этаж</button>
+					<button buttontype="submit" class="btn btn-basic" formmethod="get" formaction="page_1">Сводная</button>
+					<button buttontype="submit" class="btn btn-basic" formmethod="get" formaction="page_2">2 Этаж</button>
 					<button buttontype="submit" class="btn btn-basic" disabled>3 Этаж</button>
+					<button buttontype="submit" class="btn btn-basic" formmethod="get" formaction="page_4">Тревоги</button>
+					<button buttontype="submit" class="btn btn-basic" formmethod="get" formaction="page_5">График</button>
 				</form>
 			</div>
 			<div class="col-sm-2">
@@ -73,7 +75,7 @@
 						<ellipse cx="12" cy="6"  rx="1" ry="2" transform="rotate(300 12 12)"/>
 					</g>
 				</symbol>
-				<symbol id="lamp_off">
+<!--				<symbol id="lamp_off">
 					<g stroke="Gray" style="fill:LightGray" stroke-width="0.5"   transform="scale(3)">
 						<circle cx="12" cy="12"  r="3" />
 						<ellipse cx="12" cy="6"  rx="1" ry="2"/>
@@ -82,6 +84,13 @@
 						<ellipse cx="12" cy="6"  rx="1" ry="2" transform="rotate(180 12 12)"/>
 						<ellipse cx="12" cy="6"  rx="1" ry="2" transform="rotate(240 12 12)"/>
 						<ellipse cx="12" cy="6"  rx="1" ry="2" transform="rotate(300 12 12)"/>
+					</g>
+				</symbol>-->
+				<symbol id="lamp_off">
+					<g stroke="yellow" fill="blue" stroke-width="1.5">
+						<path d="M 30, 10 
+								A 20 20 90 1 1 10 30
+								A 16 16 90 1 0 30 10" />
 					</g>
 				</symbol>
 				<symbol id="camera_on">
@@ -97,17 +106,17 @@
 				<polyline points=" 0,8 0,1024 1848,1024 1848,8 0,8 " /> 
 			</g>
 			<foreignObject id="unit303" x="70" y="100" width="260" height="260">
-				<div class="svg_embedded" xmlns="http://www.w3.org/1999/xhtml">
+				<div class="svg_embedded">
 					<p style="font-size: 120%">303.Склад</</p>
 				</div>
 			</foreignObject>			
 			<foreignObject id="unit320" x="770" y="100" width="260" height="260">
-				<div class="svg_embedded" xmlns="http://www.w3.org/1999/xhtml">
+				<div class="svg_embedded">
 					<p style="font-size: 120%">320.Сан-<br />пропускник</</p>
 				</div>
 			</foreignObject>			
 			<foreignObject id="unit316" x="950" y="100" width="260" height="260">
-				<div class="svg_embedded" xmlns="http://www.w3.org/1999/xhtml">
+				<div class="svg_embedded">
 					<p class="unit_label" style="font-size: 120%">316.Изолятор</p>
 					<table>
 						<tr><td>Температура:</td><td id="mbT317">-</td></tr>
@@ -116,10 +125,10 @@
 					</table>
 				</div>
 			</foreignObject>			
-			<use id="hv317sw" data-type="lamp" href="#lamp_off" x="910" y="80"/>
-			<use id="DOOR308_316" data-type="door" xlink:href="#door_closed" x="1050" y="240"/>
+			<use id="hv317" data-type="lamp" href="#lamp_off" x="910" y="80"/>
+			<use id="DOOR320_322" data-type="door" xlink:href="#door_closed" x="1050" y="240"/>
 			<foreignObject id="unit314" x="1250" y="100" width="260" height="260">
-				<div class="svg_embedded" xmlns="http://www.w3.org/1999/xhtml">
+				<div class="svg_embedded">
 					<p class="unit_label" style="font-size: 120%">314.Кролики</p>
 					<table>
 						<tr><td>Температура:</td><td id="mbT315">-</td></tr>
@@ -128,44 +137,44 @@
 					</table>
 				</div>
 			</foreignObject>			
-			<use id="hv315sw" data-type="lamp" href="#lamp_off" x="1210" y="80"/>
+			<use id="hv315" data-type="lamp" href="#lamp_off" x="1210" y="80"/>
 			<foreignObject id="unit312" x="1600" y="100" width="260" height="260">
 				<div class="svg_embedded" xmlns="http://www.w3.org/1999/xhtml">
 					<p style="font-size: 120%">312.Мойка</</p>
 				</div>
 			</foreignObject>			
 			<foreignObject id="unit313" x="1690" y="350" width="260" height="260">
-				<div class="svg_embedded" xmlns="http://www.w3.org/1999/xhtml">
+				<div class="svg_embedded">
 					<p style="font-size: 120%">313.Мойка<br />стеллажей</</p>
 				</div>
 			</foreignObject>			
 			<foreignObject id="unit317" x="770" y="320" width="260" height="260">
-				<div class="svg_embedded" xmlns="http://www.w3.org/1999/xhtml">
+				<div class="svg_embedded">
 					<p style="font-size: 120%">317.Тамбур</</p>
 				</div>
 			</foreignObject>			
 			<use id="DOOR316_317" data-type="door" xlink:href="#door_closed" x="780" y="170"/>
 			<use id="DOOR308_318" data-type="door" xlink:href="#door_closed" x="780" y="460"/>
 			<foreignObject id="unit315" x="950" y="320" width="260" height="260">
-				<div class="svg_embedded" xmlns="http://www.w3.org/1999/xhtml">
+				<div class="svg_embedded">
 					<p style="font-size: 120%">315.Мойка клеток</p>
 				</div>
 			</foreignObject>			
-			<use id="DOOR320_322" data-type="door" xlink:href="#door_closed" x="1050" y="460"/>
+			<use id="DOOR308_316" data-type="door" xlink:href="#door_closed" x="1050" y="460"/>
 			<foreignObject id="unit304" x="70" y="570" width="260" height="260">
-				<div class="svg_embedded" xmlns="http://www.w3.org/1999/xhtml">
+				<div class="svg_embedded">
 					<p style="font-size: 120%">304.Комната отдыха</</p>
 				</div>
 			</foreignObject>			
 			<foreignObject id="unit308" x="1250" y="570" width="360" height="260">
-				<div class="svg_embedded" xmlns="http://www.w3.org/1999/xhtml">
+				<div class="svg_embedded">
 					<p style="font-size: 120%">308.Блок содержания животных</</p>
 				</div>
 			</foreignObject>			
 			<g id=""><use xlink:href="#camera_on" x="400" y="550" transform="rotate(90 400 600)"/><g>
 			<g id=""><use xlink:href="#camera_on" x="1700" y="550" transform="rotate(270 1700 600)"/><g>
 			<foreignObject id="unit306" x="70" y="730" width="260" height="260">
-				<div class="svg_embedded" xmlns="http://www.w3.org/1999/xhtml">
+				<div class="svg_embedded">
 					<p style="font-size: 120%">306.Операционная</p>
 					<table>
 						<tr><td>Температура:</td><td id="mbT306">-</td></tr>
@@ -175,12 +184,12 @@
 				</div>
 			</foreignObject>			
 			<foreignObject id="unit307" x="500" y="730" width="260" height="260">
-				<div class="svg_embedded" xmlns="http://www.w3.org/1999/xhtml">
+				<div class="svg_embedded">
 					<p style="font-size: 120%">307.Манипуля-<br/>ционная</p>
 				</div>
 			</foreignObject>			
 			<foreignObject id="unit309" x="750" y="730" width="260" height="260">
-				<div class="svg_embedded" xmlns="http://www.w3.org/1999/xhtml">
+				<div class="svg_embedded">
 					<p class="unit_label" style="font-size: 120%">309.Крысы</p>
 					<table>
 						<tr><td>Температура:</td><td id="mbT309">-</td></tr>
@@ -189,14 +198,14 @@
 					</table>
 				</div>
 			</foreignObject>			
-			<use id="hv309sw" data-type="lamp" href="#lamp_off" x="710" y="710"/>
+			<use id="hv309" data-type="lamp" href="#lamp_off" x="710" y="710"/>
 			<foreignObject id="unit310" x="1250" y="730" width="260" height="260">
-				<div class="svg_embedded" xmlns="http://www.w3.org/1999/xhtml">
+				<div class="svg_embedded">
 					<p style="font-size: 120%">310.Моечная</p>
 				</div>
 			</foreignObject>			
 			<foreignObject id="unit311" x="1480" y="730" width="260" height="260">
-				<div class="svg_embedded" xmlns="http://www.w3.org/1999/xhtml">
+				<div class="svg_embedded">
 					<p class="unit_label" style="font-size: 120%">311.Мыши</p>
 					<table>
 						<tr><td>Температура:</td><td id="mbT312">-</td></tr>
@@ -205,13 +214,13 @@
 					</table>
 				</div>
 			</foreignObject>			
-			<use id="hv312sw" data-type="lamp" href="#lamp_off" x="1440" y="710"/>
+			<use id="hv312" data-type="lamp" href="#lamp_off" x="1440" y="710"/>
 		</svg>
-		<script>
+<!--		<script>
 			svg = document.querySelector('svg');
 			setSVGForeignObjectsNonScale(svg);
 			window.dispatchEvent(new Event('resize'))
-		</script>
+		</script>-->
 	</div>
 	</body>
 </html>
