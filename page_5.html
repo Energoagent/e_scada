@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset=utf-8">
+		<title>ESA SCADA</title>
+		<meta name="viewport" content="height=device-height, width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="./static/css/styles.css">
+		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+		<script src="./static/js/prmchart.js"></script>
+
+		<script type="text/javascript">
+		    google.charts.load('current', {'packages':['corechart']});
+			google.charts.setOnLoadCallback(addDPChart);
+//			setInterval(getData, 5000);
+//			setInterval(drawDPChart, 5000);
+		</script>
+	</head>
+	<body class="text_summary" onload="getDataAndDraw();" onresize="drawDPChart();">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-sm-4">
+					<form id="navigation">
+						<button buttontype="submit" class="btn btn-basic" formmethod="get" formaction="page_1">Сводная</button>
+						<button buttontype="submit" class="btn btn-basic" formmethod="get" formaction="page_2">2 Этаж</button>
+						<button buttontype="submit" class="btn btn-basic" formmethod="get" formaction="page_3">3 Этаж</button>
+						<button buttontype="submit" class="btn btn-basic" formmethod="get" formaction="page_4">Тревоги</button>
+						<button buttontype="submit" class="btn btn-basic" formmethod="get" disabled>График</button>
+					</form>
+				</div>
+				<div class="col-sm-8">
+					<form id="chart_control">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">сигнал</span>
+							</div>
+							<input id="parameter" class="form-control" type="text" value="mbT212"></input>
+							<div class="input-group-prepend">
+								<span class="input-group-text">от</span>
+							</div>
+							<input id="start_date" class="form-control" type="date"></input>
+							<input id="start_time" class="form-control" type="time"></input>
+							<div class="input-group-prepend">
+								<span class="input-group-text">до</span>
+							</div>
+							<input id="end_date" class="form-control" type="date"></input>
+							<input id="end_time" class="form-control" type="time"></input>
+							<script> setChartControlData(); </script>
+							<div class="input-group-append">
+								<span class="input-group-text" style="cursor: pointer;" onclick="getChartControlData(); getDataAndDraw()">Выбрать</span>
+							</div>
+						<div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="container-fluid">
+			<div class="row row_block">
+				<div class="col-sm-12">
+					<div id="chart_mbdP" width="100%" height="50%"></div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

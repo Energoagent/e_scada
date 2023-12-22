@@ -1,0 +1,6 @@
+TOKEN = "6500776072:AAGixofe4WKnjS6XTRF9oiUCOOFgp3ca0Uc"
+chat_id = "-1002039512265"
+DBNAME="postgres"
+HOST="192.168.22.21"
+USER="solar"
+PASSWORD="solar"

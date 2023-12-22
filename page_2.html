@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset=utf-8">
+		<title>ESA SCADA</title>
+		<meta name="viewport" content="height=device-height, width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="./static/css/styles.css">
+		<script src="./static/js/scripts.js"></script>
+		<script>parametersChart(2); displayParameters();</script>
+	</head>
+	<body class="floor_plan" onresize="svgScale();" onload="svgScale();">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-8">
+				<form id="navigation">
+					<button buttontype="submit" class="btn btn-basic" formmethod="get" formaction="page_1">Сводная</button>
+					<button buttontype="submit" class="btn btn-basic" disabled>2 Этаж</button>
+					<button buttontype="submit" class="btn btn-basic" formmethod="get" formaction="page_3">3 Этаж</button>
+					<button buttontype="submit" class="btn btn-basic" formmethod="get" formaction="page_4">Тревоги</button>
+					<button buttontype="submit" class="btn btn-basic" formmethod="get" formaction="page_5">График</button>
+				</form>
+			</div>
+			<div class="col-sm-2">
+				<p style="font-size: 1.2em">Этаж 2</p>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<svg id="floor_plan" class="floor_plan" xmlns="http://www.w3.org/2000/svg"  width="1832" height="1008" viewBox="-1 -1 1834 1010" version="1.1">
+			<defs>
+				<symbol id="door_open">
+					<g fill="none" stroke="red" stroke-width="1.5">
+						<line x1="28" y1="4" x2="12" y2="8"/>
+						<line x1="12" y1="8" x2="12" y2="56"/>
+						<line x1="12" y1="56" x2="28" y2="68"/>
+						<line x1="28" y1="68" x2="28" y2="4"/>
+						<line x1="4" y1="68" x2="28" y2="68"/>
+						<line x1="28" y1="68" x2="28" y2="4"/>
+						<line x1="28" y1="4" x2="4" y2="4"/>
+						<line x1="4" y1="4" x2="4" y2="68"/>
+						<line x1="0" y1="0" x2="32" y2="0"/>
+						<line x1="32" y1="0" x2="32" y2="72"/>
+						<line x1="32" y1="72" x2="0" y2="72"/>
+						<line x1="0" y1="72" x2="0" y2="0"/>
+					</g>
+				</symbol>
+				<symbol id="door_closed">
+					<g fill="none" stroke="green" stroke-width="1.5">
+						<line x1="8" y1="20" x2="12" y2="20" />
+						<line x1="12" y1="20" x2="12" y2="40" />
+						<line x1="12" y1="40" x2="8" y2="40" />
+						<line x1="8" y1="40" x2="8" y2="20" />
+						<line x1="4" y1="68" x2="28" y2="68" />
+						<line x1="28" y1="68" x2="28" y2="4" />
+						<line x1="28" y1="4" x2="4" y2="4" />
+						<line x1="4" y1="4" x2="4" y2="68" />
+						<line x1="0" y1="0" x2="32" y2="0" />
+						<line x1="32" y1="0" x2="32" y2="72" />
+						<line x1="32" y1="72" x2="0" y2="72" />
+						<line x1="0" y1="72" x2="0" y2="0" />
+					</g>
+				</symbol>
+				<symbol id="lamp_on">
+					<g stroke="red" style="fill:yellow" stroke-width="0.5"  transform="scale(3)">
+						<circle cx="12" cy="12"  r="3" />
+						<ellipse cx="12" cy="6"  rx="1" ry="2"/>
+						<ellipse cx="12" cy="6"  rx="1" ry="2" transform="rotate(60 12 12)"/>
+						<ellipse cx="12" cy="6"  rx="1" ry="2" transform="rotate(120 12 12)"/>
+						<ellipse cx="12" cy="6"  rx="1" ry="2" transform="rotate(180 12 12)"/>
+						<ellipse cx="12" cy="6"  rx="1" ry="2" transform="rotate(240 12 12)"/>
+						<ellipse cx="12" cy="6"  rx="1" ry="2" transform="rotate(300 12 12)"/>
+					</g >
+				</symbol>
+<!--				<symbol id="lamp_off">
+					<g stroke="gray" style="fill:lightgray" stroke-width="0.5"  transform="scale(3)">
+						<circle cx="12" cy="12"  r="3" />
+						<ellipse cx="12" cy="6"  rx="1" ry="2"/>
+						<ellipse cx="12" cy="6"  rx="1" ry="2" transform="rotate(60 12 12)"/>
+						<ellipse cx="12" cy="6"  rx="1" ry="2" transform="rotate(120 12 12)"/>
+						<ellipse cx="12" cy="6"  rx="1" ry="2" transform="rotate(180 12 12)"/>
+						<ellipse cx="12" cy="6"  rx="1" ry="2" transform="rotate(240 12 12)"/>
+						<ellipse cx="12" cy="6"  rx="1" ry="2" transform="rotate(300 12 12)"/>
+					</g>
+				</symbol>-->
+				<symbol id="lamp_off">
+					<g stroke="yellow" fill="blue" stroke-width="1.5">
+						<path d="M 30, 10 
+								A 20 20 90 1 1 10 30
+								A 16 16 90 1 0 30 10" />
+					</g>
+				</symbol>
+				<symbol id="camera_on">
+					<g stroke="yellow" fill="blue" stroke-width="1.5">
+						<polyline points=" 24,16 24,56 0,56 0,16 8,16 0,0 24,0 16,16 24,16 " /> 				
+					</g>
+				</symbol>
+			</defs>
+<!--			<script>drawPixelGrid(50, 50);</script>-->
+			<g stroke-width="0.5" stroke="black" fill="none">
+				<polyline points=" 520,664 832,664 832,648 824,648 824,656 632,656 632,648 624,648 624,656 368,656 368,632 360,632 360,656 336,656 336,664 360,664 360,808 472,808 472,960 48,960 48,520 360,520 360,560 368,560 368,520 408,520 408,488 368,488 368,392 352,392 352,488 48,488 48,304 352,304 352,312 368,312 368,248 352,248 352,296 48,296 48,48 232,48 256,48 256,176 368,176 368,48 496,48 496,392 528,392 528,48 704,48 704,488 528,488 528,480 496,480 496,488 480,488 480,520 624,520 624,536 632,536 632,520 752,520 752,488 736,488 736,48 1184,48 1184,376 1144,376 1144,384 1184,384 1184,488 1144,488 1144,520 1200,520 1200,488 1192,488 1192,48 1456,48 1456,488 1280,488 1280,520 1472,520 1472,488 1464,488 1464,360 1624,360 1624,352 1464,352 1464,48 1784,48 1784,352 1744,352 1744,360 1784,360 1784,488 1552,488 1552,520 1784,520 1784,656 1736,656 1736,664 1784,664 1784,960 1504,960 1504,664 1656,664 1656,656 1328,656 1328,664 1496,664 1496,960 1224,960 1224,664 1256,664 1256,656 1112,656 1112,664 1216,664 1216,960 944,960 944,672 1032,672 1032,656 912,656 912,672 936,672 936,960 488,960 488,808 520,808 520,664 "/>
+				<polyline points=" 856,416 856,384 824,384 824,376 840,376 840,352 848,352 848,376 928,376 928,264 848,264 848,296 840,296 840,264 832,264 832,248 840,248 840,256 928,256 928,176 840,176 840,184 832,184 832,176 824,176 824,168 936,168 936,376 1064,376 1064,384 968,384 968,416 960,416 960,384 864,384 864,416 856,416"/>
+				<polyline points=" 960,464 968,464 968,488 1064,488 1064,520 832,520 832,536 824,536 824,488 856,488 856,464 864,464 864,488 960,488 960,464 "/>
+				<polyline points=" 0,0 0,1008 1832,1008 1832,0 0,0 "/>
+			</g>
+			<foreignObject id="unit203" x="100" y="100" width="260" height="260">
+				<div class="svg_embedded">
+					<p style="font-size: 120%">203.Склад</</p>
+				</div>
+			</foreignObject>			
+<!--			<use id="test_lamp" data-type="lamp" xlink:href="#lamp_on" x="240" y="240"/>-->
+			<g id=""><use xlink:href="#camera_on" x="440" y="200" transform="rotate(180 440 200)"/><g>
+			<foreignObject id="unit204" x="100" y="350" width="260" height="260">
+				<div class="svg_embedded">
+					<p style="font-size: 120%">204.Комната отдыха</p>
+				</div>
+			</foreignObject>			
+			<foreignObject id="unit206" x="100" y="700" width="260" height="260">
+				<div class="svg_embedded">
+					<p style="font-size: 120%">206.Мойка клеток</p>
+					<table>
+						<tr><td>Давление:</td><td id="mbdP206_209">-</td></tr>
+					</table>
+				</div>
+			</foreignObject>			
+			<foreignObject id="unit207"  x="670" y="570" width="260" height="260">
+				<div class="svg_embedded">
+					<p style="font-size: 120%">207.Шлюз</p>
+				</div>
+			</foreignObject>
+			<g id="CAM207"><use xlink:href="#camera_on" x="720" y="600" transform="scale(1) rotate(60 720 600)"/></d>
+			<use id="DOOR205_207" data-type="door" xlink:href="#door_closed" x="620" y="550"/>
+			<use id="DOOR207_208" data-type="door" xlink:href="#door_closed" x="820" y="550"/>
+			<foreignObject id="unit208" x="1200" y="570" width="260" height="260">
+				<div class="svg_embedded">
+					<p style="font-size: 120%">208.Чистый коридор</p>
+				</div>
+			</foreignObject>			
+			<g id=""><use xlink:href="#camera_on" x="1700" y="550" transform="rotate(270 1700 600)"/><g>
+			<foreignObject id="unit209" x="600" y="700" width="260" height="260">
+				<div class="svg_embedded">
+					<p style="font-size: 120%">209.Чистый склад</p>
+					<table>
+						<tr><td>Давление:</td><td id="mbdP208_209">-</td></tr>
+					</table>
+				</div>
+			</foreignObject>			
+			<use id="hv210" data-type="lamp" xlink:href="#lamp_off" x="960" y="680"/>
+			<foreignObject id="unit210" x="1000" y="700" width="260" height="260">
+				<div class="svg_embedded">
+					<p class="unit_label" style="font-size: 120%">210.Прием <br />животных</p>
+					<table>
+						<tr><td>Температура:</td><td id="mbT210">-</td></tr>
+						<tr><td>Влажность:</td><td id="mbW210">-</td></tr>
+						<tr><td>Давление:</td><td id="mbdP208_210">-</td></tr>
+					</table>
+				</div>
+			</foreignObject>			
+			<use id="hv211" data-type="lamp" xlink:href="#lamp_off" x="1230" y="680"/>
+			<foreignObject id="unit211" x="1270" y="700" width="260" height="260">
+				<div class="svg_embedded">
+					<p class="unit_label" style="font-size: 120%">211.Мыши</p>
+					<table>
+						<tr><td>Температура:</td><td id="mbT211">-</td></tr>
+						<tr><td>Влажность:</td><td id="mbW211">-</td></tr>
+						<tr><td>Давление:</td><td id="mbdP208_211">-</td></tr>
+					</table>
+				</div>
+			</foreignObject>			
+			<use id="hv212" data-type="lamp" xlink:href="#lamp_off" x="1510" y="680"/>
+			<foreignObject id="unit212" x="1550" y="700" width="260" height="260">
+				<div class="svg_embedded">
+					<p class="unit_label" style="font-size: 120%">212.Мыши</p>
+					<table>
+						<tr><td>Температура:</td><td id="mbT212">-</td></tr>
+						<tr><td>Влажность:</td><td id="mbW212">-</td></tr>
+						<tr><td>Давление:</td><td id="mbdP208_212">-</td></tr>
+					</table>
+				</div>
+			</foreignObject>			
+			<foreignObject id="unit213" x="1500" y="400" width="260" height="260">
+				<div class="svg_embedded">
+					<p style="font-size: 120%">213.Предоперационная</p>
+				</div>
+			</foreignObject>			
+			<g id="DOOR208_213"><use xlink:href="#door_closed" x="1500" y="470"/><g>
+			<foreignObject id="unit216" x="1000" y="420" width="260" height="260">
+				<div class="svg_embedded">
+					<p style="font-size: 120%">216.УФ шлюз</p>
+				</div>
+			</foreignObject>			
+			<use id="DOOR216_217" data-type="door" xlink:href="#door_closed" x="1090" y="320"/>
+			<use id="DOOR208_216" data-type="door" xlink:href="#door_closed" x="1090" y="470"/>
+			<foreignObject id="unit214" x="1520" y="100"  width="260" height="260">
+				<div class="svg_embedded">
+					<p style="font-size: 120%">214.Операционная</p>
+					<table>
+						<tr><td>Температура:</td><td id="mbT214">-</td></tr>
+						<tr><td>Влажность:</td><td id="mbW214">-</td></tr>
+						<tr><td>Давление:</td><td id="mbdP214_213">-</td></tr>
+					</table>
+				</div>
+			</foreignObject>			
+			<use id="DOOR214_213" data-type="door" xlink:href="#door_closed" x="1650" y="320"/>
+			<use id="hv215" data-type="lamp" xlink:href="#lamp_off" x="1210" y="80"/>
+			<foreignObject id="unit215" x="1250" y="100" width="260" height="260">
+				<div class="svg_embedded">
+					<p class="unit_label" style="font-size: 120%">215.Крысы</p>
+					<table>
+						<tr><td>Температура:</td><td id="mbT215">-</td></tr>
+						<tr><td>Влажность:</td><td id="mbW215">-</td></tr>
+						<tr><td>Давление:</td><td id="mbdP208_215">-</td></tr>
+					</table>
+				</div>
+			</foreignObject>			
+			<foreignObject id="unit217" x="950" y="100" width="260" height="260">
+				<div class="svg_embedded">
+					<p style="font-size: 120%">217.Раздевалка</p>
+				</div>
+			</foreignObject>			
+		</svg>
+<!--		<script>
+			svg = document.querySelector('svg');
+			setSVGForeignObjectsNonScale(svg);
+			window.dispatchEvent(new Event('resize'))
+		</script>-->
+	</div>
+	</body>
+</html>

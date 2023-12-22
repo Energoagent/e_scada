@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset=utf-8">
+		<title>ESA SCADA</title>
+		<meta name="viewport" content="height=device-height, width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="./static/css/styles.css">
+		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+		<script src="./static/js/scripts.js"></script>
+
+		<script type="text/javascript">
+		    google.charts.load('current', {'packages':['corechart']});
+			google.charts.setOnLoadCallback(addDPChart);
+			var data_mbdP;
+			var options_mbdP = {
+				title: 'Давление',
+				curveType: 'function',
+				legend: { position: 'bottom' },
+			};
+			var chart_mbdP;
+			function addDPChart() {
+				data_mbdP = new google.visualization.DataTable();
+				data_mbdP.addColumn('string', 'Время'); 
+				data_mbdP.addColumn('number', 'Давление'); 
+				chart_mbdP = new google.visualization.LineChart(document.getElementById('chart_mbdP'));
+				chart_mbdP.draw(data_mbdP, options_mbdP);
+			};
+			function drawDPChart() {
+				if (chart_mbdP) {
+					chart_mbdP.draw(data_mbdP, options_mbdP);
+				};
+			};
+
+			function getData() {
+				let requestBody = [
+					{
+						"parameterName":"mbT212",
+						"periodStart": "datetime",
+						"periodEnd": "datetime"
+					},
+					{
+						"parameterName":"mbW212",
+						"periodStart": "datetime",
+						"periodEnd": "datetime"
+					},
+					{
+						"parameterName":"mbdP208_212",
+						"periodStart": "datetime",
+						"periodEnd": "datetime"
+					}
+				];
+				let req = new XMLHttpRequest();
+				req.open("POST", "http://" + window.location.host + "/data");
+				req.onreadystatechange = function() {
+					if(this.readyState === 4 && this.status === 200) {
+						intervalData = JSON.parse(this.response);
+						if (intervalData) {
+console.log('DEBUG:', intervalData);
+							data_mbdP = new google.visualization.DataTable();
+							data_mbdP.addColumn('string', 'Время'); 
+							data_mbdP.addColumn('number', 'Давление');
+						
+							data_mbdP.addRows([ [ '', Number()] ]);
+						};
+					};
+				};
+				req.send(requestBody);
+			};
+			
+			setInterval(getData, 5000);
+//			setInterval(drawDPChart, 5000);
+		</script>
+	</head>
+	<body class="text_summary">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-sm-8">
+					<form id="navigation">
+						<button buttontype="submit" class="btn btn-basic" formmethod="get" formaction="page_1">Сводная</button>
+						<button buttontype="submit" class="btn btn-basic" formmethod="get" formaction="page_2">2 Этаж</button>
+						<button buttontype="submit" class="btn btn-basic" formmethod="get" formaction="page_3">3 Этаж</button>
+						<button buttontype="submit" class="btn btn-basic" formmethod="get" formaction="page_4">Тревоги</button>
+						<button buttontype="submit" class="btn btn-basic" formmethod="get" disabled>График</button>
+					</form>
+				</div>
+				<div class="col-sm-4">
+					<form id="chart_control">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">от</span>
+							</div>
+							<input class="form-control" type="date" name="start_date"></input>
+							<input class="form-control" type="time" name="start_time"></input>
+							<div class="input-group-prepend">
+								<span class="input-group-text">до</span>
+							</div>
+							<input class="form-control" type="date" name="end_date"></input>
+							<input class="form-control" type="time" name="end_time"></input>
+<!--							<select class="custom-select" size="1" name="unit">
+								<option disabled>Помещение</option>
+								<option value="unit210">210.Прием животных</option>
+								<option selected value="unit212">212.Мыши</option>
+								<option value="unit211">211.Мыши</option>
+							</select>
+							<input list="input_units" name="unit">
+								<datalist id="input_units">
+									<option value="210">.Прием животных</option>
+									<option value="211">.Мыши</option>
+								</datalist>	-->						
+							<button form="chart_control" buttontype="submit" class="btn btn-basic" formmethod="put" formaction="/data">Выбрать</button>
+						<div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="container-fluid row_block" style="background-color: white;">
+			<div id="chart_mbdP" style="width: 100%; height: 100%"></div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,36 @@
+.floor_plan {
+	background-color: #dde6eb;
+	font-weight: 500;
+	color: lightslategray;
+}
+div.svg_embedded {
+	color: #10821b;
+	font: 16px arial;
+	height: 100%;
+}
+div.text_block {
+	color: #10821b;
+	font: 16px arial;
+	height: 100%;
+	margin-block-start: 2em;
+	margin-block-end: 2em;
+	margin-inline-start: 2em;
+	margin-inline-end: 2em;
+}
+div.row_block {
+	border: 1px	solid lightslategray; 
+	border-radius: 0.5em; 
+	border-spacing: 2px; 
+	margin: 2px;
+}
+.text_summary {
+	background-color: #dde6eb;
+	font-weight: 500;
+	color: lightslategray;
+}
+
+p.unit_label {
+	margin-left: 30px; /* Отступ слева */
+}
+
+
